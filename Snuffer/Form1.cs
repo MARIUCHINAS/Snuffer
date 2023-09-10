@@ -54,7 +54,7 @@ namespace Snuffer
             foreach (var proc in processes)
             {
                 if (!string.IsNullOrEmpty(proc.MainWindowTitle))
-                    cmbx_Process.Items.Add(proc.ProcessName);
+                    cmbx_Process.Items.Add(proc.MainWindowTitle);
             }
         }
 
@@ -83,10 +83,10 @@ namespace Snuffer
                                     $"Type: {selectedProcess.GetType}\n";
 
 
-
-
                 // Display the information in a MessageBox (you can choose another way to display the info)
                 RchTxtBx_ProcessInfo.Text = processInfo;
+
+
             }
             else
             {
@@ -118,7 +118,7 @@ namespace Snuffer
                     if (dialogResult == DialogResult.Yes)
                     {
                         selectedProcess.Kill();
-                    } 
+                    }
 
                     if (selectedProcess.HasExited)
                     {
@@ -222,6 +222,23 @@ namespace Snuffer
             else
             {
                 MessageBox.Show("Selected process not found.");
+            }
+        }
+
+        private void chkbx_AutoUpdateAnalyze_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tmr_AutoUpdateAnalyze_Tick(object sender, EventArgs e)
+        {
+            if (chkbx_AutoUpdateAnalyze.Checked)
+            {
+                if (cmbx_Process.SelectedItem != null)
+                {
+                    btn_Analyze_Click(sender, EventArgs.Empty);
+                }
+
             }
         }
     }

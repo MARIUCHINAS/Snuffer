@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Snuffer));
             btn_Refresh = new Button();
             cmbx_Process = new ComboBox();
@@ -37,6 +38,8 @@
             btn_KillSelectedProcess = new Button();
             btn_SuspendSelectedProcess = new Button();
             btn_ResumeSelectedProcess = new Button();
+            chkbx_AutoUpdateAnalyze = new CheckBox();
+            tmr_AutoUpdateAnalyze = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)picbx_Snuffer).BeginInit();
             SuspendLayout();
             // 
@@ -57,13 +60,13 @@
             cmbx_Process.FormattingEnabled = true;
             cmbx_Process.Location = new Point(112, 12);
             cmbx_Process.Name = "cmbx_Process";
-            cmbx_Process.Size = new Size(151, 29);
+            cmbx_Process.Size = new Size(232, 29);
             cmbx_Process.TabIndex = 1;
             // 
             // btn_Analyze
             // 
             btn_Analyze.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            btn_Analyze.Location = new Point(269, 12);
+            btn_Analyze.Location = new Point(350, 12);
             btn_Analyze.Name = "btn_Analyze";
             btn_Analyze.Size = new Size(94, 29);
             btn_Analyze.TabIndex = 3;
@@ -74,9 +77,9 @@
             // RchTxtBx_ProcessInfo
             // 
             RchTxtBx_ProcessInfo.BackColor = Color.FromArgb(84, 134, 135);
-            RchTxtBx_ProcessInfo.Location = new Point(12, 126);
+            RchTxtBx_ProcessInfo.Location = new Point(12, 113);
             RchTxtBx_ProcessInfo.Name = "RchTxtBx_ProcessInfo";
-            RchTxtBx_ProcessInfo.Size = new Size(666, 312);
+            RchTxtBx_ProcessInfo.Size = new Size(620, 312);
             RchTxtBx_ProcessInfo.TabIndex = 4;
             RchTxtBx_ProcessInfo.Text = "";
             // 
@@ -92,7 +95,7 @@
             // btn_KillSelectedProcess
             // 
             btn_KillSelectedProcess.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            btn_KillSelectedProcess.Location = new Point(12, 91);
+            btn_KillSelectedProcess.Location = new Point(12, 78);
             btn_KillSelectedProcess.Name = "btn_KillSelectedProcess";
             btn_KillSelectedProcess.Size = new Size(94, 29);
             btn_KillSelectedProcess.TabIndex = 6;
@@ -103,7 +106,7 @@
             // btn_SuspendSelectedProcess
             // 
             btn_SuspendSelectedProcess.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            btn_SuspendSelectedProcess.Location = new Point(125, 91);
+            btn_SuspendSelectedProcess.Location = new Point(125, 78);
             btn_SuspendSelectedProcess.Name = "btn_SuspendSelectedProcess";
             btn_SuspendSelectedProcess.Size = new Size(94, 29);
             btn_SuspendSelectedProcess.TabIndex = 7;
@@ -114,7 +117,7 @@
             // btn_ResumeSelectedProcess
             // 
             btn_ResumeSelectedProcess.Font = new Font("Arial Nova", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            btn_ResumeSelectedProcess.Location = new Point(225, 91);
+            btn_ResumeSelectedProcess.Location = new Point(225, 78);
             btn_ResumeSelectedProcess.Name = "btn_ResumeSelectedProcess";
             btn_ResumeSelectedProcess.Size = new Size(94, 29);
             btn_ResumeSelectedProcess.TabIndex = 8;
@@ -122,12 +125,31 @@
             btn_ResumeSelectedProcess.UseVisualStyleBackColor = true;
             btn_ResumeSelectedProcess.Click += btn_ResumeSelectedProcess_Click;
             // 
+            // chkbx_AutoUpdateAnalyze
+            // 
+            chkbx_AutoUpdateAnalyze.AutoSize = true;
+            chkbx_AutoUpdateAnalyze.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            chkbx_AutoUpdateAnalyze.Location = new Point(450, 15);
+            chkbx_AutoUpdateAnalyze.Name = "chkbx_AutoUpdateAnalyze";
+            chkbx_AutoUpdateAnalyze.Size = new Size(176, 25);
+            chkbx_AutoUpdateAnalyze.TabIndex = 9;
+            chkbx_AutoUpdateAnalyze.Text = "Auto Update Analyze";
+            chkbx_AutoUpdateAnalyze.UseVisualStyleBackColor = true;
+            chkbx_AutoUpdateAnalyze.CheckedChanged += chkbx_AutoUpdateAnalyze_CheckedChanged;
+            // 
+            // tmr_AutoUpdateAnalyze
+            // 
+            tmr_AutoUpdateAnalyze.Enabled = true;
+            tmr_AutoUpdateAnalyze.Interval = 50;
+            tmr_AutoUpdateAnalyze.Tick += tmr_AutoUpdateAnalyze_Tick;
+            // 
             // Snuffer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(143, 188, 148);
             ClientSize = new Size(800, 450);
+            Controls.Add(chkbx_AutoUpdateAnalyze);
             Controls.Add(btn_ResumeSelectedProcess);
             Controls.Add(btn_SuspendSelectedProcess);
             Controls.Add(btn_KillSelectedProcess);
@@ -141,6 +163,7 @@
             Text = "Snuffer";
             ((System.ComponentModel.ISupportInitialize)picbx_Snuffer).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -153,5 +176,7 @@
         private Button btn_KillSelectedProcess;
         private Button btn_SuspendSelectedProcess;
         private Button btn_ResumeSelectedProcess;
+        private CheckBox chkbx_AutoUpdateAnalyze;
+        private System.Windows.Forms.Timer tmr_AutoUpdateAnalyze;
     }
 }
