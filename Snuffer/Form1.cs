@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using System.Windows;
 
 namespace Snuffer
 {
@@ -10,6 +11,14 @@ namespace Snuffer
         public Snuffer()
         {
             InitializeComponent();
+        }
+
+        public Process GetSelectedProcess()
+        {
+            string selectedProcessName = cmbx_Process.SelectedItem.ToString();
+            Process selectedProcess = Process.GetProcessesByName(selectedProcessName).FirstOrDefault();
+
+            return selectedProcess;
         }
 
         private void btn_Refresh_Click(object sender, EventArgs e)
@@ -32,10 +41,7 @@ namespace Snuffer
                 return;
             }
 
-            string selectedProcessName = cmbx_Process.SelectedItem.ToString();
-
-            // Find the selected process by its name
-            Process selectedProcess = Process.GetProcessesByName(selectedProcessName).FirstOrDefault();
+            Process selectedProcess = GetSelectedProcess();
 
             if (selectedProcess != null)
             {
@@ -47,14 +53,44 @@ namespace Snuffer
                                     $"Total Processor Time: {selectedProcess.TotalProcessorTime}\n" +
                                     $"Working Set: {selectedProcess.WorkingSet64} bytes\n" +
                                     $"Base Priority: {selectedProcess.BasePriority}\n" +
-                                    $"Session ID: {selectedProcess.SessionId}\n" + 
+                                    $"Session ID: {selectedProcess.SessionId}\n" +
                                     $"Type: {selectedProcess.GetType}\n";
-                                    
+
 
 
 
                 // Display the information in a MessageBox (you can choose another way to display the info)
                 RchTxtBx_ProcessInfo.Text = processInfo;
+            }
+            else
+            {
+                MessageBox.Show("Selected process not found.");
+            }
+        }
+
+        private void btn_KillSelectedProcess_Click(object sender, EventArgs e)
+        {
+            // Check if a process is selected
+            if (cmbx_Process.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a process to Kill.");
+                return;
+            }
+
+            Process selectedProcess = GetSelectedProcess();
+            var selectedProcessId = selectedProcess.Id;
+
+            if (selectedProcess != null)
+            {
+                try
+                {
+                    selectedProcess.Kill();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Something went wrong");
+                }
+
             }
             else
             {

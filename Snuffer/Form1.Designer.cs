@@ -34,6 +34,7 @@
             btn_Analyze = new Button();
             RchTxtBx_ProcessInfo = new RichTextBox();
             picbx_Snuffer = new PictureBox();
+            btn_KillSelectedProcess = new Button();
             ((System.ComponentModel.ISupportInitialize)picbx_Snuffer).BeginInit();
             SuspendLayout();
             // 
@@ -86,12 +87,24 @@
             picbx_Snuffer.TabIndex = 5;
             picbx_Snuffer.TabStop = false;
             // 
+            // btn_KillSelectedProcess
+            // 
+            btn_KillSelectedProcess.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_KillSelectedProcess.Location = new Point(12, 91);
+            btn_KillSelectedProcess.Name = "btn_KillSelectedProcess";
+            btn_KillSelectedProcess.Size = new Size(94, 29);
+            btn_KillSelectedProcess.TabIndex = 6;
+            btn_KillSelectedProcess.Text = "Kill";
+            btn_KillSelectedProcess.UseVisualStyleBackColor = true;
+            btn_KillSelectedProcess.Click += btn_KillSelectedProcess_Click;
+            // 
             // Snuffer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(143, 188, 148);
             ClientSize = new Size(800, 450);
+            Controls.Add(btn_KillSelectedProcess);
             Controls.Add(picbx_Snuffer);
             Controls.Add(RchTxtBx_ProcessInfo);
             Controls.Add(btn_Analyze);
@@ -111,5 +124,6 @@
         private Button btn_Analyze;
         private RichTextBox RchTxtBx_ProcessInfo;
         private PictureBox picbx_Snuffer;
+        private Button btn_KillSelectedProcess;
     }
 }
