@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using System.Windows;
+using System.Runtime.InteropServices;
 
 namespace Snuffer
 {
@@ -12,6 +13,29 @@ namespace Snuffer
         {
             InitializeComponent();
         }
+
+        [Flags]
+        public enum ThreadAccess : int
+        {
+            TERMINATE = (0x0001),
+            SUSPEND_RESUME = (0x0002),
+            GET_CONTEXT = (0x0008),
+            SET_CONTEXT = (0x0010),
+            SET_INFORMATION = (0x0020),
+            QUERY_INFORMATION = (0x0040),
+            SET_THREAD_TOKEN = (0x0080),
+            IMPERSONATE = (0x0100),
+            DIRECT_IMPERSONATION = (0x0200)
+        }
+
+        [DllImport("kernel32.dll")]
+        static extern IntPtr OpenThread(ThreadAccess dwDesiredAccess, bool bInheritHandle, uint dwThreadId);
+        [DllImport("kernel32.dll")]
+        static extern uint SuspendThread(IntPtr hThread);
+        [DllImport("kernel32.dll")]
+        static extern int ResumeThread(IntPtr hThread);
+        [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern bool CloseHandle(IntPtr handle);
 
         public Process GetSelectedProcess()
         {
@@ -37,7 +61,7 @@ namespace Snuffer
             // Check if a process is selected
             if (cmbx_Process.SelectedItem == null)
             {
-                MessageBox.Show("Please select a process to analyze.");
+                MessageBox.Show("Please select a process to Analyze.");
                 return;
             }
 
@@ -85,6 +109,48 @@ namespace Snuffer
                 try
                 {
                     selectedProcess.Kill();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Something went wrong");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Selected process not found.");
+            }
+        }
+
+        private void btn_SuspendSelectedProcess_Click(object sender, EventArgs e)
+        {
+            // Check if a process is selected
+            if (cmbx_Process.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a process to Suspend.");
+                return;
+            }
+
+            Process selectedProcess = GetSelectedProcess();
+            var selectedProcessId = selectedProcess.Id;
+
+            if (selectedProcess != null)
+            {
+                try
+                {
+                    foreach (ProcessThread pT in selectedProcess.Threads)
+                    {
+                        IntPtr pOpenThread = OpenThread(ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
+
+                        if (pOpenThread == IntPtr.Zero)
+                        {
+                            continue;
+                        }
+
+                        SuspendThread(pOpenThread);
+
+                        CloseHandle(pOpenThread);
+                    }
                 }
                 catch (Exception)
                 {

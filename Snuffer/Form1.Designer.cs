@@ -35,6 +35,7 @@
             RchTxtBx_ProcessInfo = new RichTextBox();
             picbx_Snuffer = new PictureBox();
             btn_KillSelectedProcess = new Button();
+            btn_SuspendSelectedProcess = new Button();
             ((System.ComponentModel.ISupportInitialize)picbx_Snuffer).BeginInit();
             SuspendLayout();
             // 
@@ -98,12 +99,24 @@
             btn_KillSelectedProcess.UseVisualStyleBackColor = true;
             btn_KillSelectedProcess.Click += btn_KillSelectedProcess_Click;
             // 
+            // btn_SuspendSelectedProcess
+            // 
+            btn_SuspendSelectedProcess.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_SuspendSelectedProcess.Location = new Point(112, 91);
+            btn_SuspendSelectedProcess.Name = "btn_SuspendSelectedProcess";
+            btn_SuspendSelectedProcess.Size = new Size(94, 29);
+            btn_SuspendSelectedProcess.TabIndex = 7;
+            btn_SuspendSelectedProcess.Text = "Suspend";
+            btn_SuspendSelectedProcess.UseVisualStyleBackColor = true;
+            btn_SuspendSelectedProcess.Click += btn_SuspendSelectedProcess_Click;
+            // 
             // Snuffer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(143, 188, 148);
             ClientSize = new Size(800, 450);
+            Controls.Add(btn_SuspendSelectedProcess);
             Controls.Add(btn_KillSelectedProcess);
             Controls.Add(picbx_Snuffer);
             Controls.Add(RchTxtBx_ProcessInfo);
@@ -125,5 +138,6 @@
         private RichTextBox RchTxtBx_ProcessInfo;
         private PictureBox picbx_Snuffer;
         private Button btn_KillSelectedProcess;
+        private Button btn_SuspendSelectedProcess;
     }
 }
