@@ -113,7 +113,7 @@
             // 
             // btn_ResumeSelectedProcess
             // 
-            btn_ResumeSelectedProcess.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_ResumeSelectedProcess.Font = new Font("Arial Nova", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             btn_ResumeSelectedProcess.Location = new Point(225, 91);
             btn_ResumeSelectedProcess.Name = "btn_ResumeSelectedProcess";
             btn_ResumeSelectedProcess.Size = new Size(94, 29);

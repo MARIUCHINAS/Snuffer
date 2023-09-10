@@ -5,6 +5,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using System.Windows;
 using System.Runtime.InteropServices;
 
+// https://coolors.co/6da34d-56445d-548687-8fbc94-c5e99b
+
 namespace Snuffer
 {
     public partial class Snuffer : Form
@@ -108,7 +110,20 @@ namespace Snuffer
             {
                 try
                 {
-                    selectedProcess.Kill();
+                    DialogResult dialogResult = MessageBox.Show(
+                        $"Are you sure you want to terminate {selectedProcess.ProcessName}",
+                        "Snuffer",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        selectedProcess.Kill();
+                    } 
+
+                    if (selectedProcess.HasExited)
+                    {
+                        MessageBox.Show($"Process {selectedProcess.ProcessName} has been terminated");
+                    }
                 }
                 catch (Exception)
                 {
