@@ -47,7 +47,9 @@ namespace Snuffer
                                     $"Total Processor Time: {selectedProcess.TotalProcessorTime}\n" +
                                     $"Working Set: {selectedProcess.WorkingSet64} bytes\n" +
                                     $"Base Priority: {selectedProcess.BasePriority}\n" +
-                                    $"Session ID: {selectedProcess.SessionId}\n";
+                                    $"Session ID: {selectedProcess.SessionId}\n" + 
+                                    $"Type: {selectedProcess.GetType}\n";
+                                    
 
 
 
