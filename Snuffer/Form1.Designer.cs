@@ -36,6 +36,7 @@
             picbx_Snuffer = new PictureBox();
             btn_KillSelectedProcess = new Button();
             btn_SuspendSelectedProcess = new Button();
+            btn_ResumeSelectedProcess = new Button();
             ((System.ComponentModel.ISupportInitialize)picbx_Snuffer).BeginInit();
             SuspendLayout();
             // 
@@ -102,7 +103,7 @@
             // btn_SuspendSelectedProcess
             // 
             btn_SuspendSelectedProcess.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            btn_SuspendSelectedProcess.Location = new Point(112, 91);
+            btn_SuspendSelectedProcess.Location = new Point(125, 91);
             btn_SuspendSelectedProcess.Name = "btn_SuspendSelectedProcess";
             btn_SuspendSelectedProcess.Size = new Size(94, 29);
             btn_SuspendSelectedProcess.TabIndex = 7;
@@ -110,12 +111,24 @@
             btn_SuspendSelectedProcess.UseVisualStyleBackColor = true;
             btn_SuspendSelectedProcess.Click += btn_SuspendSelectedProcess_Click;
             // 
+            // btn_ResumeSelectedProcess
+            // 
+            btn_ResumeSelectedProcess.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_ResumeSelectedProcess.Location = new Point(225, 91);
+            btn_ResumeSelectedProcess.Name = "btn_ResumeSelectedProcess";
+            btn_ResumeSelectedProcess.Size = new Size(94, 29);
+            btn_ResumeSelectedProcess.TabIndex = 8;
+            btn_ResumeSelectedProcess.Text = "Resume";
+            btn_ResumeSelectedProcess.UseVisualStyleBackColor = true;
+            btn_ResumeSelectedProcess.Click += btn_ResumeSelectedProcess_Click;
+            // 
             // Snuffer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(143, 188, 148);
             ClientSize = new Size(800, 450);
+            Controls.Add(btn_ResumeSelectedProcess);
             Controls.Add(btn_SuspendSelectedProcess);
             Controls.Add(btn_KillSelectedProcess);
             Controls.Add(picbx_Snuffer);
@@ -139,5 +152,6 @@
         private PictureBox picbx_Snuffer;
         private Button btn_KillSelectedProcess;
         private Button btn_SuspendSelectedProcess;
+        private Button btn_ResumeSelectedProcess;
     }
 }

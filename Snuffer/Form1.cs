@@ -163,5 +163,51 @@ namespace Snuffer
                 MessageBox.Show("Selected process not found.");
             }
         }
+
+        private void btn_ResumeSelectedProcess_Click(object sender, EventArgs e)
+        {
+            // Check if a process is selected
+            if (cmbx_Process.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a process to Resume.");
+                return;
+            }
+
+            Process selectedProcess = GetSelectedProcess();
+            var selectedProcessId = selectedProcess.Id;
+
+            if (selectedProcess != null)
+            {
+                try
+                {
+                    foreach (ProcessThread pT in selectedProcess.Threads)
+                    {
+                        IntPtr pOpenThread = OpenThread(ThreadAccess.SUSPEND_RESUME, false, (uint)pT.Id);
+
+                        if (pOpenThread == IntPtr.Zero)
+                        {
+                            continue;
+                        }
+
+                        var suspendCount = 0;
+                        do
+                        {
+                            suspendCount = ResumeThread(pOpenThread);
+                        } while (suspendCount > 0);
+
+                        CloseHandle(pOpenThread);
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Something went wrong");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Selected process not found.");
+            }
+        }
     }
 }
