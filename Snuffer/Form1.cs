@@ -71,6 +71,12 @@ namespace Snuffer
 
             if (selectedProcess != null)
             {
+                string assemblyPath = selectedProcess.MainModule.FileName;
+                FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assemblyPath);
+
+                string compiler = fileVersionInfo.CompanyName; // Compiler name
+                string version = fileVersionInfo.FileVersion;  // Assembly version
+
                 // Gather information about the selected process
                 string processInfo = $"Process Name: {selectedProcess.ProcessName}\n" +
                                     $"Process ID: {selectedProcess.Id}\n" +
@@ -80,7 +86,11 @@ namespace Snuffer
                                     $"Working Set: {selectedProcess.WorkingSet64} bytes\n" +
                                     $"Base Priority: {selectedProcess.BasePriority}\n" +
                                     $"Session ID: {selectedProcess.SessionId}\n" +
-                                    $"Type: {selectedProcess.GetType}\n";
+                                    $"Type: {selectedProcess.GetType}\n" +
+                                    $"Compiler (beta): {compiler}\n" +
+                                    $"Assembly version: {version}\n";
+                                    
+                                    
 
 
                 // Display the information in a MessageBox (you can choose another way to display the info)
