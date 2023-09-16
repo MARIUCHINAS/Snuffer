@@ -330,66 +330,9 @@ namespace Snuffer
 
         }
 
-        private void btn_SelectDLL_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "DLL Files (*.dll)|*.dll|All Files (*.*)|*.*"; // Filter for DLL files
-                openFileDialog.FilterIndex = 1; // Default to DLL files
-                openFileDialog.Title = "Select a DLL File";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    // Get the selected file's path and display it in the TextBox
-                    txtbx_SelectDLL.Text = openFileDialog.FileName;
-                }
-            }
-        }
-
         public void txtbx_SelectDLL_TextChanged(object sender, EventArgs e)
         {
 
-        }
-
-        private void btn_InjectDLL_Click(object sender, EventArgs e)
-        {
-            // Check if a process is selected
-            if (cmbx_Process.SelectedItem == null)
-            {
-                MessageBox.Show("Please select a process to inject the DLL into.");
-                return;
-            }
-
-            // Get the selected process
-            Process selectedProcess = GetSelectedProcess();
-
-            if (selectedProcess != null)
-            {
-                // Get the path of the DLL to inject (you should replace this with your actual DLL path)
-                string dllPath = txtbx_SelectDLL.Text;
-
-                if (string.IsNullOrEmpty(dllPath))
-                {
-                    MessageBox.Show("Please select a DLL to inject.");
-                    return;
-                }
-
-                // Inject the DLL into the selected process
-                bool injectionSuccess = InjectDll(selectedProcess.Id, dllPath);
-
-                if (injectionSuccess)
-                {
-                    MessageBox.Show($"DLL injected successfully into {selectedProcess.ProcessName}.");
-                }
-                else
-                {
-                    MessageBox.Show($"Failed to inject DLL into {selectedProcess.ProcessName}.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Selected process not found.");
-            }
         }
 
         private void Snuffer_Load(object sender, EventArgs e)
