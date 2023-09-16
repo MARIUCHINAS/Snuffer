@@ -40,6 +40,7 @@
             btn_ResumeSelectedProcess = new Button();
             chkbx_AutoUpdateAnalyze = new CheckBox();
             tmr_AutoUpdateAnalyze = new System.Windows.Forms.Timer(components);
+            opnfldlg_SelectDll = new OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)picbx_Snuffer).BeginInit();
             SuspendLayout();
             // 
@@ -161,6 +162,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Snuffer";
             Text = "Snuffer";
+            Load += Snuffer_Load;
             ((System.ComponentModel.ISupportInitialize)picbx_Snuffer).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -178,5 +180,6 @@
         private Button btn_ResumeSelectedProcess;
         private CheckBox chkbx_AutoUpdateAnalyze;
         private System.Windows.Forms.Timer tmr_AutoUpdateAnalyze;
+        private OpenFileDialog opnfldlg_SelectDll;
     }
 }
