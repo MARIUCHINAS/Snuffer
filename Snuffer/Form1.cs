@@ -71,6 +71,9 @@ namespace Snuffer
         [DllImport("kernel32.dll")]
         public static extern uint WaitForSingleObject(IntPtr hHandle, uint dwMilliseconds);
 
+        [DllImport("kernel32.dll")]
+        public static extern bool VirtualFreeEx(IntPtr hProcess, IntPtr lpAddress, UIntPtr dwSize, AllocationType dwFreeType);
+
         public enum AllocationType
         {
             Commit = 0x00001000,
@@ -113,13 +116,45 @@ namespace Snuffer
 
         public Process GetSelectedProcess()
         {
-            string selectedProcessName = cmbx_Process.SelectedItem.ToString();
-            Process selectedProcess = Process.GetProcessesByName(selectedProcessName).FirstOrDefault();
+            try
+            {
+                if (cmbx_Process.SelectedItem != null)
+                {
+                    string selectedProcessName = cmbx_Process.SelectedItem.ToString();
+                    if (string.IsNullOrEmpty(selectedProcessName))
+                    {
+                        MessageBox.Show("No Process Selected");
+                        return null;
+                    }
+                    Process selectedProcess = Process.GetProcessesByName(selectedProcessName).FirstOrDefault();
+                    if (selectedProcess != null)
+                    {
+                        return selectedProcess;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No Process Selected");
+                        return null;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Something Went Wrong");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Something went Wrong: {ex.GetType().Name}");
+                return null;
+            }
 
-            return selectedProcess;
+
+
+
         }
 
-        
+
         private void btn_Refresh_Click(object sender, EventArgs e)
         {
             Process[] processes = Process.GetProcesses();
@@ -338,6 +373,79 @@ namespace Snuffer
         private void Snuffer_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void RchTxtBx_ProcessInfo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_SelectDLL_Click(object sender, EventArgs e)
+        {
+            // Create an instance of OpenFileDialog
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            // Set initial directory (optional)
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            // Filter for DLL files
+            openFileDialog.Filter = "DLL Files (*.dll)|*.dll|All Files (*.*)|*.*";
+
+            // Show the dialog to the user
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Set the selected file path to the txtbx_DLLPath TextBox
+                txtbx_DLLPath.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void btn_InjectDLL_Click(object sender, EventArgs e)
+        {
+            // Define the path to your DLL
+            string dllPath = txtbx_DLLPath.Text;
+
+            // Get the selected process
+            Process selectedProcess = GetSelectedProcess();
+
+            if (selectedProcess != null)
+            {
+                IntPtr hProcess = OpenProcess(ProcessAccessFlags.All, false, selectedProcess.Id);
+
+                if (hProcess != IntPtr.Zero)
+                {
+                    try
+                    {
+                        // Allocate memory in the target process
+                        IntPtr remoteMemory = VirtualAllocEx(hProcess, IntPtr.Zero, (uint)(dllPath.Length + 1), AllocationType.Commit, MemoryProtection.ReadWrite);
+
+                        // Write the DLL path to the target process
+                        byte[] dllPathBytes = Encoding.ASCII.GetBytes(dllPath);
+                        int bytesWritten;
+                        WriteProcessMemory(hProcess, remoteMemory, dllPathBytes, (uint)dllPathBytes.Length, out bytesWritten);
+
+                        // Load the DLL into the target process
+                        IntPtr loadLibraryAddr = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+                        IntPtr threadHandle = CreateRemoteThread(hProcess, IntPtr.Zero, 0, loadLibraryAddr, remoteMemory, 0, IntPtr.Zero);
+
+                        // Wait for the injection to complete
+                        WaitForSingleObject(threadHandle, uint.MaxValue);
+
+                        // Clean up
+                        CloseHandle(threadHandle);
+                        VirtualFreeEx(hProcess, remoteMemory, UIntPtr.Zero, AllocationType.Release);
+                        CloseHandle(hProcess);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"An Error Has Occured: {ex.GetType().Name}");
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("The Process Has not Been Verified");
+                }
+            }
         }
     }
 }

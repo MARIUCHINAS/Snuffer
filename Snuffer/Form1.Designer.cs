@@ -41,6 +41,10 @@
             chkbx_AutoUpdateAnalyze = new CheckBox();
             tmr_AutoUpdateAnalyze = new System.Windows.Forms.Timer(components);
             opnfldlg_SelectDll = new OpenFileDialog();
+            txtbx_DLLPath = new TextBox();
+            btn_SelectDLL = new Button();
+            btn_InjectDLL = new Button();
+            lbl_InjectDLL = new Label();
             ((System.ComponentModel.ISupportInitialize)picbx_Snuffer).BeginInit();
             SuspendLayout();
             // 
@@ -83,6 +87,7 @@
             RchTxtBx_ProcessInfo.Size = new Size(620, 312);
             RchTxtBx_ProcessInfo.TabIndex = 4;
             RchTxtBx_ProcessInfo.Text = "";
+            RchTxtBx_ProcessInfo.TextChanged += RchTxtBx_ProcessInfo_TextChanged;
             // 
             // picbx_Snuffer
             // 
@@ -144,12 +149,55 @@
             tmr_AutoUpdateAnalyze.Interval = 50;
             tmr_AutoUpdateAnalyze.Tick += tmr_AutoUpdateAnalyze_Tick;
             // 
+            // txtbx_DLLPath
+            // 
+            txtbx_DLLPath.Location = new Point(340, 78);
+            txtbx_DLLPath.Name = "txtbx_DLLPath";
+            txtbx_DLLPath.Size = new Size(161, 27);
+            txtbx_DLLPath.TabIndex = 10;
+            // 
+            // btn_SelectDLL
+            // 
+            btn_SelectDLL.Font = new Font("Arial Nova Cond", 7.20000029F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_SelectDLL.Location = new Point(507, 78);
+            btn_SelectDLL.Name = "btn_SelectDLL";
+            btn_SelectDLL.Size = new Size(27, 27);
+            btn_SelectDLL.TabIndex = 11;
+            btn_SelectDLL.Text = "...";
+            btn_SelectDLL.UseVisualStyleBackColor = true;
+            btn_SelectDLL.Click += btn_SelectDLL_Click;
+            // 
+            // btn_InjectDLL
+            // 
+            btn_InjectDLL.Font = new Font("Arial Nova Cond", 7.20000029F, FontStyle.Bold, GraphicsUnit.Point);
+            btn_InjectDLL.Location = new Point(540, 78);
+            btn_InjectDLL.Name = "btn_InjectDLL";
+            btn_InjectDLL.Size = new Size(92, 27);
+            btn_InjectDLL.TabIndex = 12;
+            btn_InjectDLL.Text = "Inject DLL";
+            btn_InjectDLL.UseVisualStyleBackColor = true;
+            btn_InjectDLL.Click += btn_InjectDLL_Click;
+            // 
+            // lbl_InjectDLL
+            // 
+            lbl_InjectDLL.AutoSize = true;
+            lbl_InjectDLL.Font = new Font("Arial Nova Cond", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            lbl_InjectDLL.Location = new Point(350, 54);
+            lbl_InjectDLL.Name = "lbl_InjectDLL";
+            lbl_InjectDLL.Size = new Size(151, 21);
+            lbl_InjectDLL.TabIndex = 13;
+            lbl_InjectDLL.Text = "DLL Injection (beta)";
+            // 
             // Snuffer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(143, 188, 148);
             ClientSize = new Size(800, 450);
+            Controls.Add(lbl_InjectDLL);
+            Controls.Add(btn_InjectDLL);
+            Controls.Add(btn_SelectDLL);
+            Controls.Add(txtbx_DLLPath);
             Controls.Add(chkbx_AutoUpdateAnalyze);
             Controls.Add(btn_ResumeSelectedProcess);
             Controls.Add(btn_SuspendSelectedProcess);
@@ -181,5 +229,9 @@
         private CheckBox chkbx_AutoUpdateAnalyze;
         private System.Windows.Forms.Timer tmr_AutoUpdateAnalyze;
         private OpenFileDialog opnfldlg_SelectDll;
+        private TextBox txtbx_DLLPath;
+        private Button btn_SelectDLL;
+        private Button btn_InjectDLL;
+        private Label lbl_InjectDLL;
     }
 }
